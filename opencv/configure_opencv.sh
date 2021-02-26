@@ -15,7 +15,11 @@ if [[ $PLATFORM == *"arm"* ]] ; then
         -D BUILD_opencv_python3=TRUE \
         -D OPENCV_EXTRA_EXE_LINKER_FLAGS=-latomic \
         -D WITH_OPENMP=ON \
-        -D WITH_VTK=ON \
+        -D BUILD_opencv_highgui=OFF \
+        -D WITH_VTK=OFF \
+        -D WITH_WIN32UI=OFF \
+        -D WITH_QT=OFF \
+        -D WITH_GTK=OFF \
         -D BUILD_EXAMPLES=OFF \
         -D BUILD_PERF_TESTS=OFF \
         -D BUILD_TESTS=OFF \
@@ -33,8 +37,13 @@ else
         -D BUILD_opencv_python3=TRUE \
         -D BUILD_opencv_gpu=OFF \
         -D WITH_OPENMP=ON \
-        -D WITH_VTK=ON \
+        -D BUILD_opencv_highgui=OFF \
+        -D OPENCV_EXTRA_EXE_LINKER_FLAGS=-latomic \
+        -D WITH_WIN32UI=OFF \
+        -D WITH_VTK=OFF \
         -D WITH_TBB=ON \
+        -D WITH_QT=OFF \
+        -D WITH_GTK=OFF \
         -D WITH_OPENMP=ON \
         -D BUILD_EXAMPLES=OFF \
         -D BUILD_PERF_TESTS=OFF \
