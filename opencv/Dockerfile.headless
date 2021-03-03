@@ -12,7 +12,6 @@ RUN set -ex \
         libv4l-dev libxvidcore-dev libx264-dev libatlas-base-dev \
         libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 libgstreamer-plugins-good1.0-0 libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
         libavcodec58 libavcodec-dev libavformat-dev libavutil-dev libswscale-dev  libavresample-dev \
-        libgtk-3-0 libgtk-3-dev \
         libdc1394-22 libdc1394-22-dev libhdf5-103 libhdf5-dev \
         libopenblas0 libopenblas-dev libprotobuf17 libprotobuf-dev \
         libjpeg8 libjpeg-dev libpng16-16 libpng-dev libtiff5 \
@@ -40,13 +39,14 @@ RUN set -ex \
         -D WITH_EIGEN=ON \
         -D WITH_TBB=ON \
         -D BUILD_opencv_gpu=OFF \
+        -D BUILD_opencv_highgui=OFF \
         -D WITH_LAPACK=OFF \
         -D WITH_PROTOBUF=ON \
         -D BUILD_SHARED_LIBS=OFF \
         -D WITH_V4L=ON \
         -D WITH_GSTREAMER=ON \
         -D WITH_FFMPEG=ON \
-        -D WITH_GTK=ON \
+        -D WITH_GTK=OFF \
         -D WITH_QT=OFF \
         -D WITH_CUDA=OFF \
         -D WITH_VTK=OFF \
@@ -63,7 +63,7 @@ RUN set -ex \
         -D BUILD_OPENCV_PYTHON2=OFF \
         -D BUILD_OPENCV_JAVA=OFF \
         -D BUILD_TESTS=OFF \
-        -D BUILD_IPP_IW=OFF \
+        -D BUILD_IPP=OFF \
         -D BUILD_PERF_TESTS=OFF \
         -D BUILD_EXAMPLES=OFF \
         -D BUILD_ANDROID_EXAMPLES=OFF \
@@ -85,11 +85,10 @@ RUN set -ex \
         libtiff-dev libwebp-dev libopenjp2-7-dev libtbb-dev \
         libtesseract-dev python3-dev libv4l-dev libatlas-base-dev \
         libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
-        libxvidcore-dev libavresample-dev libx264-dev \
-        libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libdc1394-22-dev \
-        libgtk-3-dev \
+        libxvidcore-dev libavresample-dev libx264-dev libdc1394-22-dev \
+        libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
     && apt-get -qq autoremove \
     && apt-get -qq clean \
     && rm -rf /var/lib/apt/lists/*
-    
+
 CMD ["python3","-c","'import cv2; print(cv2.getBuildInformation())'"]
