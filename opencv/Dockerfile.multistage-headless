@@ -1,0 +1,6 @@
+FROM jjhickman/opencv-python:headless AS builder
+
+ARG TARGETPLATFORM
+ARG NUM_THREADS=6
+ENV PLATFORM="${TARGETPLATFORM}"
+WORKDIR /BUILD
