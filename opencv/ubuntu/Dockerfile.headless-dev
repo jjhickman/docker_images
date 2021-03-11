@@ -13,14 +13,12 @@ WORKDIR /opencv
 RUN set -ex \
     && apt-get -qq update \
     && apt-get -qq install -y --no-install-recommends \
-        build-essential cmake git wget unzip libx264-dev \
+        build-essential cmake git wget unzip libx265-dev \
         libv4l-dev libxvidcore-dev libatlas-base-dev \
-        libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 libgstreamer-plugins-good1.0-0 libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
-        libavcodec58 libavcodec-dev libavformat58 libavformat-dev libavutil-dev libswscale5 libswscale-dev  libavresample-dev \
-        libdc1394-22 libdc1394-22-dev libhdf5-103 libhdf5-dev \
-        libopenblas-dev libprotobuf-dev libjpeg-dev libpng-dev \
-        libtiff-dev libwebp-dev libopenjp2-7-dev \
-        libtbb2 libtbb-dev libeigen3-dev tesseract-ocr libtesseract-dev \
+        libgstreamer-plugins-base1.0-0 libgstreamer-plugins-good1.0-0 libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
+        libavcodec58 libavcodec-dev libavformat58 libavformat-dev libavutil-dev libswscale5 libswscale-dev libavresample-dev \
+        libdc1394-22 libdc1394-22-dev libhdf5-103 libhdf5-dev libeigen3-dev \
+        libopenblas-dev tesseract-ocr libtesseract-dev \
         python3-minimal python3-pip python3-numpy python3-dev \
     && cd /tmp/ \
     && wget -q --no-check-certificate https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip -O opencv.zip \
@@ -28,8 +26,7 @@ RUN set -ex \
     && unzip -qq opencv.zip -d /tmp && rm -rf opencv.zip \
     && unzip -qq opencv_contrib.zip -d /tmp && rm -rf opencv_contrib.zip \
     && mkdir -p /tmp/opencv-${OPENCV_VERSION}/build \
-    && cd  /tmp/opencv-${OPENCV_VERSION}/build \
-    && echo $PLATFORM; \
+    && cd  /tmp/opencv-${OPENCV_VERSION}/build; \
     if [[ $PLATFORM == *"arm"* ]] ; then \
         cmake \
             -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -72,16 +69,13 @@ RUN set -ex \
     && ldconfig \
     && cd / \
     && rm -rf /tmp/* \
-    && apt-get -qq purge -y \
-        software-properties-common build-essential cmake wget unzip libhdf5-dev \
-        libopenblas-dev libprotobuf-dev libjpeg8-dev libpng-dev \
-        libtiff-dev libwebp-dev libopenjp2-7-dev libtbb-dev \
-        libtesseract-dev python3-dev libv4l-dev libatlas-base-dev \
-        libavcodec-dev libavformat-dev libavutil-dev libswscale-dev \
-        libxvidcore-dev libavresample-dev libx264-dev \
-        libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libdc1394-22-dev \
+    && apt-get -qq purge -y libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev \
+        libopenblas-dev libtesseract-dev python3-dev libv4l-dev libatlas-base-dev \
+        libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libeigen3-dev \
+        libxvidcore-dev libavresample-dev libdc1394-22-dev libhdf5-dev libx265-dev \
+        git wget unzip \
     && apt-get -qq autoremove \
     && apt-get -qq clean \
     && rm -rf /var/lib/apt/lists/*
-    
-CMD ["python3","-c","'import cv2; print(cv2.getBuildInformation())'"]
+
+CMD python3 -c "import cv2; print(cv2.getBuildInformation())"
